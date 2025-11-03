@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             UserSeeder::class,
+            BrandSeeder::class,
             DeviceSeeder::class,
             ServiceSeeder::class,
             DeviceServiceVariantSeeder::class,

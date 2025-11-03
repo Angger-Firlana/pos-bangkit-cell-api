@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrandController;
+
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DeviceServiceVariantController;
@@ -86,5 +88,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [PriceLogController::class, 'index']);
         Route::get('/{id}', [PriceLogController::class, 'show']);
     });
+
+    Route::apiResource('brands', BrandController::class);
 
 });

@@ -1,14 +1,13 @@
 <?php
 
-/**
- * Created by Reliese Model.
- */
-
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; // penting
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens; // sanctum
 
 /**
  * Class User
@@ -28,35 +27,37 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class User extends Model
+class User extends Authenticatable // ubah dari Model ke Authenticatable
 {
-	protected $table = 'users';
+    use HasApiTokens, Notifiable; // tambahkan trait ini
 
-	protected $casts = [
-		'email_verified_at' => 'datetime'
-	];
+    protected $table = 'users';
 
-	protected $hidden = [
-		'password',
-		'remember_token'
-	];
+    protected $casts = [
+        'email_verified_at' => 'datetime'
+    ];
 
-	protected $fillable = [
-		'name',
-		'email',
-		'email_verified_at',
-		'password',
-		'role',
-		'remember_token'
-	];
+    protected $hidden = [
+        'password',
+        'remember_token'
+    ];
 
-	public function price_logs()
-	{
-		return $this->hasMany(PriceLog::class);
-	}
+    protected $fillable = [
+        'name',
+        'email',
+        'email_verified_at',
+        'password',
+        'role',
+        'remember_token'
+    ];
 
-	public function transactions()
-	{
-		return $this->hasMany(Transaction::class, 'id_operator');
-	}
+    public function price_logs()
+    {
+        return $this->hasMany(PriceLog::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'id_operator');
+    }
 }

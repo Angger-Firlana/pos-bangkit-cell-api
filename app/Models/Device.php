@@ -14,12 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * Class Device
  * 
  * @property int $id
- * @property string $merek
+ * @property int $brand_id
  * @property string $model
  * @property string|null $tipe
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
+ * @property Brand $brand
  * @property Collection|Service[] $services
  *
  * @package App\Models
@@ -28,11 +29,20 @@ class Device extends Model
 {
 	protected $table = 'devices';
 
+	protected $casts = [
+		'brand_id' => 'int'
+	];
+
 	protected $fillable = [
-		'merek',
+		'brand_id',
 		'model',
 		'tipe'
 	];
+
+	public function brand()
+	{
+		return $this->belongsTo(Brand::class);
+	}
 
 	public function services()
 	{

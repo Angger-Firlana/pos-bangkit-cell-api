@@ -10,31 +10,11 @@ class DeviceSeeder extends Seeder
     public function run(): void
     {
         $devices = [
-            [
-                'merek' => 'Apple',
-                'model' => 'iPhone 15 Pro',
-                'tipe' => 'Pro',
-            ],
-            [
-                'merek' => 'Apple',
-                'model' => 'iPhone 14',
-                'tipe' => 'Standard',
-            ],
-            [
-                'merek' => 'Samsung',
-                'model' => 'Galaxy S23',
-                'tipe' => 'Ultra',
-            ],
-            [
-                'merek' => 'Xiaomi',
-                'model' => 'Redmi Note 13',
-                'tipe' => 'Standard',
-            ],
-            [
-                'merek' => 'Oppo',
-                'model' => 'Reno 11 Pro',
-                'tipe' => 'Pro',
-            ],
+            ['brand_id' => 1, 'model' => 'iPhone 15 Pro', 'tipe' => 'Pro'],
+            ['brand_id' => 1, 'model' => 'iPhone 14', 'tipe' => 'Standard'],
+            ['brand_id' => 2, 'model' => 'Galaxy S23', 'tipe' => 'Ultra'],
+            ['brand_id' => 3, 'model' => 'Redmi Note 13', 'tipe' => 'Standard'],
+            ['brand_id' => 4, 'model' => 'Reno 11 Pro', 'tipe' => 'Pro'],
         ];
 
         foreach ($devices as $device) {
