@@ -11,7 +11,7 @@ class DeviceController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Device::query();
+            $query = Device::query()->with('brand');
 
             if ($request->has('search')) {
                 $search = $request->search;
@@ -28,7 +28,7 @@ class DeviceController extends Controller
     public function show($id)
     {
         try {
-            $device = Device::with(['variants.service'])->findOrFail($id);
+            $device = Device::with(['services', 'brand'])->findOrFail($id);
             return response()->json(['success' => true, 'data' => $device]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'error' => $th->getMessage()], 500);

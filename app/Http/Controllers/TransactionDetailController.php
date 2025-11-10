@@ -96,15 +96,14 @@ class TransactionDetailController extends Controller
 
             $data = $request->validate([
                 'harga_jual' => 'required|numeric|min:0',
-                'diskon' => 'nullable|numeric|min:0',
+                'harga_modal' => 'nullable|numeric|min:0',
                 'catatan_perubahan' => 'nullable|string'
             ]);
 
-            $subtotal = $data['harga_jual'] - ($data['diskon'] ?? 0);
+            $subtotal = $data['harga_jual'];
 
             $detail->update([
                 'harga_jual' => $data['harga_jual'],
-                'diskon' => $data['diskon'] ?? 0,
                 'subtotal' => $subtotal,
                 'catatan_perubahan' => $data['catatan_perubahan'] ?? null,
             ]);

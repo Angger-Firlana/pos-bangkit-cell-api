@@ -43,6 +43,8 @@ class Transaction extends Model
 	protected $fillable = [
 		'id_operator',
 		'status',
+		'customer_name',
+		'customer_phone',
 		'metode_pembayaran',
 		'jumlah_bayar',
 		'kembalian',
@@ -50,12 +52,12 @@ class Transaction extends Model
 		'total'
 	];
 
-	public function user()
+	public function operator()
 	{
 		return $this->belongsTo(User::class, 'id_operator');
 	}
 
-	public function transaction_details()
+	public function details()
 	{
 		return $this->hasMany(TransactionDetail::class);
 	}

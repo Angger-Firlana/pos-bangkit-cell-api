@@ -37,12 +37,13 @@ class TransactionDetail extends Model
 	protected $fillable = [
 		'transaction_id',
 		'device_service_variant_id',
+		'harga_modal',
 		'harga'
 	];
 
-	public function device_service_variant()
+	public function variant()
 	{
-		return $this->belongsTo(DeviceServiceVariant::class);
+		return $this->belongsTo(DeviceServiceVariant::class, 'device_service_variant_id');
 	}
 
 	public function transaction()

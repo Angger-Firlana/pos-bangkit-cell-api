@@ -13,7 +13,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Transaction::with(['details.variant.device', 'details.variant.service']);
+            $query = Transaction::with('operator');
 
             if ($request->has('status')) {
                 $query->where('status', $request->status);
@@ -40,22 +40,23 @@ class TransactionController extends Controller
         DB::beginTransaction();
         try {
             $validated = $request->validate([
-                'user_id' => 'required|exists:users,id',
-                'device_id' => 'required|exists:devices,id',
+                'id_operator' => 'required|exists:users,id',
                 'customer_name' => 'required|string',
                 'customer_phone' => 'nullable|string',
                 'keluhan' => 'nullable|string',
-                'payment_method' => 'nullable|string',
+                'metode_pembayaran' => 'nullable|string',
                 'details' => 'required|array|min:1',
             ]);
 
             $trx = Transaction::create([
-                'user_id' => $validated['user_id'],
-                'device_id' => $validated['device_id'],
+                'id_operator' => $validated['id_operator'],
                 'customer_name' => $validated['customer_name'],
                 'customer_phone' => $validated['customer_phone'] ?? null,
                 'keluhan' => $validated['keluhan'] ?? null,
-                'payment_method' => $validated['payment_method'] ?? 'cash',
+                'jumlah_bayar' => $request['jumlah_bayar'] ?? null,
+                'kembalian' => $request['kembalian'] ?? null,
+                'qris_reference' => $request['qr_reference']??null,
+                'metode_pembayaran' => $validated['metode_pembayaran'] ?? 'cash',
                 'status' => 'pending',
             ]);
 
