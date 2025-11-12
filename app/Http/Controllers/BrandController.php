@@ -12,7 +12,7 @@ class BrandController extends Controller
     public function index()
     {
         try {
-            $brands = Brand::with('devices')->get();
+            $brands = Brand::all();
             return response()->json($brands, 200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Gagal mengambil data brand', 'error' => $e->getMessage()], 500);

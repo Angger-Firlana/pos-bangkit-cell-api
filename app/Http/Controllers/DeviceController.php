@@ -39,7 +39,7 @@ class DeviceController extends Controller
     {
         try {
             $validated = $request->validate([
-                'merek' => 'required|string',
+                'brand_id' => 'required|integer',
                 'model' => 'required|string',
                 'tipe' => 'nullable|string'
             ]);
@@ -54,7 +54,7 @@ class DeviceController extends Controller
     {
         try {
             $device = Device::findOrFail($id);
-            $device->update($request->only(['merek', 'model', 'tipe']));
+            $device->update($request->only(['brand_id', 'model', 'tipe']));
             return response()->json(['success' => true, 'data' => $device]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
