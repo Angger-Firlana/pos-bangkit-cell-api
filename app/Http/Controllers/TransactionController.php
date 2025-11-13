@@ -45,6 +45,7 @@ class TransactionController extends Controller
                 'customer_phone' => 'nullable|string',
                 'keluhan' => 'nullable|string',
                 'metode_pembayaran' => 'nullable|string',
+                'total' => 'required|numeric',
                 'details' => 'required|array|min:1',
             ]);
 
@@ -70,7 +71,7 @@ class TransactionController extends Controller
                 ]);
             }
 
-            $trx->update(['total_harga' => $total]);
+            $trx->update(['total' => $total]);
             DB::commit();
 
             return response()->json(['success' => true, 'data' => $trx->load('details.variant')]);

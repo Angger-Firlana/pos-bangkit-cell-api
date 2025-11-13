@@ -9,6 +9,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DeviceServiceVariantController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\PriceLogController;
+use App\Http\Controllers\StatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,6 +90,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{id}', [PriceLogController::class, 'show']);
     });
 
+    Route::get('stats', [StatsController::class, 'index']);
+    Route::get('transaction/report', [StatsController::class, 'report']);
     Route::apiResource('brands', BrandController::class);
 
 });
