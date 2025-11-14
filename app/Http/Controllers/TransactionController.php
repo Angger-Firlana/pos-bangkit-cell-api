@@ -45,7 +45,6 @@ class TransactionController extends Controller
                 'customer_phone' => 'nullable|string',
                 'keluhan' => 'nullable|string',
                 'metode_pembayaran' => 'nullable|string',
-                'total' => 'required|numeric',
                 'details' => 'required|array|min:1',
             ]);
 
