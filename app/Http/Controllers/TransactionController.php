@@ -90,4 +90,37 @@ class TransactionController extends Controller
             return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $trx = Transaction::findOrFail($id);
+            $trx->delete();
+            return response()->json(['success' => true, 'message' => 'Transaction deleted successfully.']);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function forceDelete($id)
+    {
+        try {
+            $trx = Transaction::withTrashed()->findOrFail($id);
+            $trx->forceDelete();
+            return response()->json(['success' => true, 'message' => 'Transaction permanently deleted.']);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function restore($id)
+    {
+        try {
+            $trx = Transaction::withTrashed()->findOrFail($id);
+            $trx->restore();
+            return response()->json(['success' => true, 'message' => 'Transaction restored successfully.']);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
+        }
+    }
 }
