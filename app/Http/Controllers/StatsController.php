@@ -46,7 +46,7 @@ class StatsController extends Controller
     }
 
 
-     public function report()
+    public function report()
     {
         // Total revenue & transaksi sukses
         $totalRevenue = Transaction::where('status', 'success')->sum('total');
@@ -90,6 +90,13 @@ class StatsController extends Controller
                 'totalRevenue' => $totalRevenue,
                 'totalTransactions' => $totalTransactions,
             ]
+        ]);
+    }
+
+    public function getOmset(){
+        $omset = Transaction::where(['status' => 'success', 'created_at' => now()->subMonth()])->sum('total');
+        return response()->json([
+            'omset' => $omset
         ]);
     }
 }

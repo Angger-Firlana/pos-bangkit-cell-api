@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [TransactionController::class, 'destroy']);
         Route::delete('/{id}/force', [TransactionController::class, 'forceDelete']);
         Route::post('/{id}/restore', [TransactionController::class, 'restore']);
+        
     });
 
     /*
@@ -94,6 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('stats', [StatsController::class, 'index']);
+    Route::get('transaction/omset', [StatsController::class, 'getOmset']);
     Route::get('transaction/report', [StatsController::class, 'report']);
     Route::apiResource('brands', BrandController::class);
 
