@@ -80,11 +80,18 @@ class TransactionController extends Controller
         }
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatusAndPayment(Request $request, $id)
     {
         try {
             $trx = Transaction::findOrFail($id);
-            $trx->update(['status' => $request->status]);
+            $trx->update([
+                'status' => $request->status,
+                'jumlah_bayar' => $request->jumlah_bayar ?? $trx->jumlah_bayar,
+                'kembalian' => $request->kembalian ?? $trx->kembalian,
+                'qris_reference' => $request->qris_reference ?? $trx->qris_reference,
+                'metode_pembayaran' => $request->metode_pembayaran ?? $trx->metode_pembayaran,
+
+            ]);
             return response()->json(['success' => true, 'data' => $trx]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
@@ -119,6 +126,31 @@ class TransactionController extends Controller
             $trx = Transaction::withTrashed()->findOrFail($id);
             $trx->restore();
             return response()->json(['success' => true, 'message' => 'Transaction restored successfully.']);
+        } catch (\Throwable $th) {
+            return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
+        }
+    }
+
+    public function getMargin()
+    {
+        try {
+            $margins = TransactionDetail::select(
+                'transaction_details.id',
+                'device_service_variants.tipe_part as variant_name',
+                'services.nama as service_name',
+                'devices.model as device_name',
+                'transaction_details.harga as harga_jual',
+                'transaction_details.harga_modal',
+                DB::raw('(transaction_details.harga - transaction_details.harga_modal) as margin')
+            )
+            ->join('transactions', 'transactions.id', '=', 'transaction_details.transaction_id')
+            ->where('transactions.created_at', '>=', now()->subMonth())
+            ->join('device_service_variants', 'transaction_details.device_service_variant_id', '=', 'device_service_variants.id')
+            ->join('services', 'device_service_variants.service_id', '=', 'services.id')
+            ->join('devices', 'device_service_variants.device_id', '=', 'devices.id')
+            ->get();
+
+            return response()->json(['success' => true, 'data' => $margins]);
         } catch (\Throwable $th) {
             return response()->json(['success' => false, 'error' => $th->getMessage()], 500);
         }

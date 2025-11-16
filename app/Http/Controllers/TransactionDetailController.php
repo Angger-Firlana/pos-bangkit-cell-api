@@ -83,6 +83,25 @@ class TransactionDetailController extends Controller
         }
     }
 
+    public function updateHargaModal(Request $request,  $detailId)
+    {
+        try {
+            $detail = TransactionDetail::findOrFail($detailId);
+
+            $data = $request->validate([
+                'harga_modal' => 'required|numeric|min:0',
+            ]);
+
+            $detail->update([
+                'harga_modal' => $data['harga_modal'],
+            ]);
+
+            return response()->json(['status' => true, 'message' => 'Harga modal berhasil diperbarui', 'data' => $detail], 200);
+        } catch (Exception $e) {
+            return response()->json(['status' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
     // PUT /api/transactions/{id}/details/{detailId}
     public function update(Request $request, $id, $detailId)
     {

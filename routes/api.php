@@ -8,6 +8,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\DeviceServiceVariantController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\PriceLogController;
 use App\Http\Controllers\StatsController;
 
@@ -77,12 +78,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [TransactionController::class, 'index']); // ?status=done
         Route::get('/{id}', [TransactionController::class, 'show']);
         Route::post('/', [TransactionController::class, 'store']);
-        Route::put('/{id}/status', [TransactionController::class, 'updateStatus']);
+        Route::patch('/{id}/payment', [TransactionController::class, 'updateStatusAndPayment']);
         Route::delete('/{id}', [TransactionController::class, 'destroy']);
         Route::delete('/{id}/force', [TransactionController::class, 'forceDelete']);
         Route::post('/{id}/restore', [TransactionController::class, 'restore']);
         
+        Route::patch('/details/{detailId}/hargaModal', [TransactionDetailController::class, 'updateHargaModal']);
+        
     });
+
+    Route::get('transaction/margin', [TransactionController::class, 'getMargin']);
+    
 
     /*
     |--------------------------------------------------------------------------
