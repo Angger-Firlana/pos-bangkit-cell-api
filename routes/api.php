@@ -82,7 +82,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{id}', [TransactionController::class, 'destroy']);
         Route::delete('/{id}/force', [TransactionController::class, 'forceDelete']);
         Route::post('/{id}/restore', [TransactionController::class, 'restore']);
-        
+
         Route::patch('/details/{detailId}/hargaModal', [TransactionDetailController::class, 'updateHargaModal']);
         
     });
