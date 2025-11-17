@@ -11,6 +11,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\PriceLogController;
 use App\Http\Controllers\StatsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,14 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::patch('/details/{detailId}/hargaModal', [TransactionDetailController::class, 'updateHargaModal']);
         
+    });
+
+    Route::prefix('users')->group(function () {
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index']);
+        Route::get('/{id}', [App\Http\Controllers\UserController::class, 'show']);
+        Route::post('/', [App\Http\Controllers\UserController::class, 'store']);
+        Route::put('/{id}', [App\Http\Controllers\UserController::class, 'update']);
+        Route::delete('/{id}', [App\Http\Controllers\UserController::class, 'destroy']);
     });
 
     Route::get('transaction/margin', [TransactionController::class, 'getMargin']);
