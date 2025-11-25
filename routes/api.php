@@ -110,8 +110,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('stats', [StatsController::class, 'index']);
-    Route::get('transaction/omset', [StatsController::class, 'getOmset']);
-    Route::get('transaction/report', [StatsController::class, 'report']);
+    Route::get('stats/omset', [StatsController::class, 'getOmset']);
+    Route::get('stats/report', [StatsController::class, 'report']);
     Route::apiResource('brands', BrandController::class);
 
 });
